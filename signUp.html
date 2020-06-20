@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--jQuery Library CDN-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!--jQuery  CDN-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
+  <script src="js/loader.js"></script>
+  <link href="css/loader.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #17a2b8;
+      height: 100vh;
+    }
+
+    #Submit .container #submit-row #submit-column #Submit-box {
+      margin-top: 90px;
+      max-width: 600px;
+      height: 750px;
+      border: 1px solid #9C9C9C;
+      background-color: #EAEAEA;
+    }
+
+    #Submit .container #submit-row #submit-column #Submit-box #SubmitForm {
+      padding: 20px;
+    }
+  </style>
+  <title>Details Sign Up Page</title>
+  <script>
+    var base64ImageData;
+    //validation aapplication:-
+
+
+
+    //ready() function
+    $(document).ready(function () {
+      //toastr optins directly picked from configurations:-
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+      // var radioValue;
+      // click event:-
+      $("#signUpButton").on("click", function () {
+
+        var dob = $('#dateOfBirth').val();
+        //  console.log('dob is=>');console.log(dob);
+
+
+        var dobDate = new Date(dob);
+        var convertedDate = dobDate.getDate() + '-' + eval(dobDate.getMonth() + 1) + '-' + dobDate.getFullYear();
+
+        formData = {
+          firstName: $("#firstName").val(),
+          lastName: $("#lastName").val(),
+          email: $("#email").val(),
+          password: $("#password").val(),
+          gender: $('input[name="gender"]:checked').val(),
+          dateOfBirth: convertedDate,
+          profilePhoto: base64ImageData,
+        }
+
+
+        var apiUrl = "https://springboot-users-crud.herokuapp.com/api/auth/signup";
+        var jsonString = JSON.stringify(formData);
+        showLoader();
+
+        $.ajax({
+          type: 'POST',
+          url: apiUrl,
+          data: jsonString,
+          dataType: 'json',
+
+          contentType: 'application/Json',
+
+          //    encode          : true,
+
+
+          //space for success response
+          success: function (details) {
+
+            console.log(details);
+
+            if (details.status == "success") {
+
+              toastr.success(details.message);
+              //as soon as we received success response user is redirected to index.html page :
+
+              hideLoader();
+
+              setTimeout(
+                function () {
+                  location.replace('index.html');
+                }, 3000);
+
+            }
+            else {
+              toastr.error(details.message);
+              hideLoader();
+            }
+
+          },
+          //space for error response
+          error: function (errors) {
+            console.log(errors);
+            hideLoader();
+
+            if (errors.status == 0) {
+              toastr.error(errors.statusText);
+            }
+            else {
+              toastr.error(errors.responseJSON.message);
+            }
+
+
+          }
+        });
+
+      });
+    });
+    function signInPage() {
+      location.replace('index.html')
+
+    }
+
+    function convertToBase64(object) {
+
+      base64ImageData = '';
+
+      var file = object.files[0];
+
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        console.log('Base 64 file format: ', reader.result)
+        base64ImageData = reader.result;
+      }
+      reader.readAsDataURL(file);
+
+
+    }
+
+
+
+
+
+
+  </script>
+</head>
+
+<body>
+  <!-- header start -->
+  <header>
+    <!-- Fixed navbar -->
+    <nav class="navbar card navbar-dark fixed-top bg-dark">
+      <div class="text-center ">
+        <a class="navbar-brand text-center" href="#">Login and Registration Application</a>
+        <div>
+
+    </nav>
+  </header>
+  <!-- header end -->
+
+  <!-- container start -->
+
+  <!-- container end -->
+
+
+  <!-- copied code start -->
+  <!-- Begin page content -->
+  <div id="Submit">
+
+    <div class="container">
+      <!-- space for toastr message to popup -->
+      <div class="row" style='margin-top: 25px;'>
+        <pre id='toastrOptions'></pre>
+      </div>
+
+      <div id="submit-row" class="row justify-content-center align-items-center mb-4">
+        <div id="submit-column" class="col-md-8">
+          <div id="Submit-box" class="col-md-12">
+            <!-- start of login form -->
+            <form id="SubmitForm" class="form" action="" method="post">
+              <h3 class="text-center text-info">Sign Up</h3>
+
+              <div class=" form-group ">
+                <label for="firstName" class="form-label ">First Name</label>
+                <input type="text" class="form-control " placeholder="First Name" id="firstName" name="firstName">
+              </div>
+
+              <div class="form-group">
+                <label for="lastName" >Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Last Name" name="lastName">
+              </div>
+              <div class="form-group">
+                <label for="email" >Email</label>
+                <input type="email" class="form-control " id="email" placeholder="Email" name="email">
+              </div>
+
+              <div class="form-group">
+                <label for="password" >Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+              </div>
+
+              <div class="form-group">
+                <label>Gender</label><br>
+
+                <div class="form-check-inline">
+                  <label class="form-check-label" for="male">
+                    <input type="radio" class="form-check-input" id="male" name="gender" value="male">Male
+                  </label>
+                </div>
+                <div class="form-check-inline">
+                  <label class="form-check-label" for="female">
+                    <input type="radio" class="form-check-input" id="female" name="gender" value="female">Female
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="date" class="form-control " id="dateOfBirth" name="dateOfBirth">
+              </div>
+              <div class="form-group">
+                <label for="profilePicture" >Profile Photo</label>
+                <input type="file" class="form-control" id="profilePicture" onchange="convertToBase64(this);"
+                  name="profilePicture" accept="jpeg,PNG">
+              </div>
+              <div class="row justify-content-center mt-5">
+                <input type="button" name="signUpButton" id="signUpButton" class="btn btn-primary mr-5" value="Sign Up">
+                <input type="button" name="loginButton" id="loginButton" class="btn btn-primary"
+                  value="Already have an account?Login" onclick="signInPage()">
+              </div>
+
+
+          </div>
+
+          </form>
+          <!-- end of login form -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+ 
+
+  <!-- Page content end -->
+
+
+
+
+  <div class="loader-div" style="display:none;" id="global-loader-div">
+    <span class="spinner" style="z-index: 1000001 !important;"></span>
+  </div>
+
+  
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--jQuery Library CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--jQuery  CDN-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- toastr css file -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
+    <!-- suportive files for loader -->
+    <script src="js/loader.js"></script>
+    <link href="css/loader.css" rel="stylesheet" />
+    <!-- fancybox css CDN  -->
+    <!-- <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" /> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css" media="screen" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"
+        integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" />
+    <!-- CSS libraries CDN of DataTables -->
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.bootstrap4.min.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            height: 100vh;
+        }
+
+        .footer {
+            position: absolute;
+            /* bottom: 0; */
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            line-height: 60px;
+            /* Vertically center the text there */
+            background-color: hsla(0, 0%, 96%, 0.884);
+        }
+    </style>
+
+
+    <title>User Listing Page</title>
+
+</head>
+
+<body>
+    <header class="mb-4">
+        <!-- Fixed navbar -->
+        <nav class="navbar card d-flex navbar-expand-md navbar-dark row fixed-top bg-dark">
+            <div class=" ">
+                <a class="navbar-brand text-center" href="#">Login and Registration Application</a>
+                <div>
+                    <!-- <div class="text-right">
+                        <h5 class="display-5 text-primary">Welcome: <span id="firstName_id" class="text-secondary
+            
+                            "></span> <button class="btn btn-primary ml-3" onclick="logout()">Logout</button> </h5>
+
+                    </div> -->
+        </nav>
+    </header>
+
+    </div>
+    <!-- main body code start-->
+
+
+    <div class="mt-5 mb-4"> </div>
+
+    <!-- start of dynamic table  -->
+    <div class="div mt-4">
+
+        <div class=" border-0 border-primary mt-5">
+            <div class="row justify-content-center mt-4">
+                <br>
+                <br>
+                <br>
+                <h5 class="display-6 text-primary">User Listing Page</h5>
+            </div>
+            <table id="example" class="table table-responsive-lg mt-5 table-striped table-bordered " style="width:100%">
+                <thead>
+                    <tr class="">
+                        <th>S No.</th>
+                        <th>Profile Picture</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>Date Of Birth</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <!-- end of dynamic table -->
+    </div>
+
+
+
+
+    <!--main body code end-->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="d-flex justify-content-center modal-header ">
+                    <!-- <h5 class="modal-title" id="updateUserModalLabel">User details Updation Page </h5> -->
+                    <div class=" modal-title">
+                        <div class="row justify-content-center  ">
+                            <h5 class="display-5 text-primary">Update User Details </h5>
+                        </div>
+                    </div>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-5">
+
+
+                        <div class="div">
+                            <form id="updateForm">
+                                <div class="form-group mt-5">
+                                    <label for="firstName" class="form-label ">First Name</label>
+                                    <input type="text" class="form-control " id="firstName" name="firstName">
+                                    <input type="hidden" class="form-control " id="userId" name="userId" value="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName" class="">Last Name</label>
+                                    <input type="text" class="form-control " id="lastName" name="lastName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control " id="email" name="email">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>Gender</label><br>
+                                    <div class="form-check-inline">
+                                        <label for="male" class="form-check-label">
+                                            <input type="radio" class="form-check-input" id="male" name="gender"
+                                                value="male">Male
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label for="female" class="form-check-label">
+                                            <input type="radio" class="form-check-input" id="female" name="gender"
+                                                value="female">Female
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dateOfBirth">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profilePicture">Profile Photo</label>
+                                    <input type="file" class="form-control" id="profilePicture" name="profilePicture"
+                                        onchange="convertToBase64(this);" accept="image/*">
+                                    <input type="hidden" class="form-control " id="base64InputField"
+                                        name="base64InputField" value="">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-success" onclick="updateMethod();">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for deleting Record -->
+    <!-- Modal -->
+    <div class="modal fade" id="deleteRecordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Delete?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are You sure dou you really want to delete this Record?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" id="deleteRecordModel">Ok</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- div for loader positioning -->
+    <div class="loader-div" style="display:none;" id="global-loader-div">
+        <span class="spinner" style="z-index: 1000001 !important;"></span>
+    </div>
+
+
+
+
+    <!-- footer -->
+    <footer class="footer text-center"> &copy; Developed By: Bhupesh
+        <div class="container">
+            <span class="text-muted"></span>
+        </div>
+    </footer>
+
+    <!-- CDN of jQuery Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+    <!-- CDN of Bootstrap js file -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- CDN of toastr messaging -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <!-- js CDN for fancy box  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <!-- jQuery DataTable CDN -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.bootstrap4.min.js"></script>
+
+    <script>
+        //declaring table as global variable so that it can be used inside any block:--->
+        var datatableObject;
+        var fancyBoxObject;
+        //ready method started:
+        $(document).ready(function () {
+
+            datatableObject = $('#example').DataTable({
+                lengthChange: false,
+                searching: true,
+                pageLength: 5,
+            });
+
+            loadUsersList();
+
+            fancyBoxObject = $.fancybox({             
+
+            'overlayShow': true,
+            'titlePosition': 'inside',                 
+            });  
+
+
+
+            $('.fancy-box-image').on('click', function (e) {
+
+                console.log('IMage clicked.........');
+
+                var tarGet= $(this).attr("src");
+                var imgtitle= $(this).attr("alt");
+
+                $.fancybox.getInstance().addContent( {href: tarGet, type:'image'});
+
+            });
+                
+           
+        });
+        //end of ready method
+
+
+        
+
+        //start of loadList():--->
+        function loadUsersList() {
+            //toastr optins directly picked from configurations:-
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            var accessToken = localStorage.getItem("AccessToken");
+            var LoggedInUsername = localStorage.getItem("firstNameId");
+            var localstorageid = localStorage.getItem("LoggedInUserId");
+            var headers = {
+                'Authorization': 'Bearer ' + accessToken
+            };
+            var apiUrl = "https://springboot-users-crud.herokuapp.com/api/users";
+            showLoader();
+            //Callign List all users api:--->
+            $.ajax({
+                type: 'GET',
+                url: apiUrl,
+                async: false,
+                headers: headers,
+                success: function (response) {
+                    var data = response.data;
+                    var status = response.status;
+                    if (response.status == "success") {
+                        //Displaying success message on receiving response:----->
+                        toastr.success(response.message);
+                        //hiding the loader once received responsee:---->
+                        hideLoader();
+                        //flushing all table body rows prior reloading table:----->
+                        $("#firstName_id").text(LoggedInUsername);
+                        var length = response.users.length;
+
+
+                        for (var index = 0; index < length; index++) {
+                            var count = index + 1;
+                            var firstName = response.users[index].firstName;
+                            var lastName = response.users[index].lastName;
+                            var email = response.users[index].email;
+                            var gender = response.users[index].gender;
+                            var DateOfBirth = response.users[index].dateOfBirth;
+                            var userId = response.users[index].id;
+                            var profilePicture = response.users[index].profilePhoto;
+
+
+                            datatableObject.row.add([count,
+                                '<img  src="' + profilePicture + '" id="img_' + userId + '"  class="img-thumbnail fancy-box-image" alt="Bhupesh"/>',
+                                firstName, lastName, email, gender, DateOfBirth,
+                                '<div class="row"><button class=" ml-2 btn btn-success mr-1 " onclick="openModal(\'' + userId + '\');" id="edit_btn_' + userId + '">Edit</button>'
+                                + ' <button class="btn btn-danger " onclick="openDeleteModal(\'' + userId + '\');" id="delete_btn_' + userId + '"  >Delete</button> </div>']);
+
+                            //rendering ProfilePicture of each user corresponding to its img tag:---->
+
+
+
+                            //Disable the Delete button corresponding to user who is Logged In:--->
+                            if (localstorageid === userId) {
+                                $('#' + 'delete_btn_' + userId + '').prop('disabled', true);
+                            }
+
+                        }
+
+                        //Adding pagination buttons below the table
+                        datatableObject.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+                        datatableObject.draw();
+
+                    }
+
+                },
+
+                //for error response:-
+                error: function (error) {
+                    console.log(error);
+
+                    if (error.status == 401) {
+                        location.replace("index.html");
+                    }
+                },
+            })
+        }
+        //End of loadList()
+
+
+        //start of logout():---->
+        function logout() {
+            //Flushing the existing values from the localStorage:---->
+            localStorage.removeItem("firstNameId");
+            localStorage.removeItem("AccessToken");
+
+            //Redirecting user to the Login Page on click event of Logout Button:--->
+            location.replace("index.html");
+        }
+        //end of Logout Method.
+
+        //Opening Modal
+        function openModal(userId) {
+            //Ensuring all input fields are empty brfore opening of Modal:-
+            $("#updateForm")[0].reset();
+            //Opening of Modal
+            $('#updateUserModal').modal('show');
+            //toastr optins directly picked from configurations:-
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+
+            //Applying Find One User:
+            var accessToken = localStorage.getItem("AccessToken");
+
+            // console.log(accessToken);
+            var LoggedInUsername = localStorage.getItem("firstNameId");
+
+            var headers = {
+                'Authorization': 'Bearer ' + accessToken
+            };
+
+            //Concept of Find one user:-
+            var apiUrl = "https://springboot-users-crud.herokuapp.com/api/users/" + userId;
+            //showing Loader prior Calling ajax:----->
+            showLoader();
+            $.ajax({
+                type: 'GET',
+                url: apiUrl,
+                headers: headers,
+                success: function (response) {
+                    //hiding loader post ajax response----->
+                    hideLoader();
+                    var status = response.status;
+                    var userFirstName = response.user.firstName;
+                    var userLastName = response.user.lastName;
+                    var userEmail = response.user.email;
+                    var userGender = response.user.gender;
+                    var profilePhoto = response.user.profilePhoto;
+                    //inserting existing profilePicture to hiddeninput field:--->
+                    $('#base64InputField').val(profilePhoto);
+
+                    //ensuring proper orientation of Date received from Response:-->
+                    if (response.user.dateOfBirth != null) {
+                        var userDateOfBirth = response.user.dateOfBirth.split('-');
+                        var dobDate = new Date(userDateOfBirth[2] + '-' + userDateOfBirth[1] + '-' + userDateOfBirth[0]);
+                        console.log('dobDate is');
+
+                        console.log(dobDate);
+                        var convertedDate = dobDate.getFullYear() + '-' + formatDateAndMonth(eval(dobDate.getMonth() + 1)) + '-' + formatDateAndMonth(dobDate.getDate());
+                        $("#dateOfBirth").val(convertedDate);
+
+                    }
+                    else {
+
+                        console.log("null isnt allowed");
+                        toastr.warning("dob was null");
+                    }
+                    //Set value attribute from hidden Field
+                    $("#userId").val(userId);
+
+                    //Setting Values to their corresponding input fields of Modal:-->
+                    $("#firstName").val(userFirstName);
+                    $("#lastName").val(userLastName);
+                    $("#email").val(userEmail);
+                    $('input[name="gender"]').val([userGender]);
+                },
+
+                //for error response:-
+                error: function (error) {
+                    //hiding loader post ajax response----->
+                    hideLoader();
+
+                    //Redirecting user to login Page if unauthorised error is encountered :--->
+                    if (error.status == 401) {
+                        location.replace("index.html");
+                    }
+                }
+            })
+            //end of "Finding records of a particular employee" ajax Method.
+        }
+        //End of openModal() Function
+
+        function formatDateAndMonth(val) {
+
+            if (val < 10) {
+                val = '0' + val;
+            }
+            return val;
+        }
+
+        //start of UpdateMethod();------>
+        function updateMethod() {
+            console.log("inside UpdateMethod()");
+            console.log('Printing the value attribute of hidden input field at begining of updateMethod() ');
+            console.log($('#base64InputField').val());
+
+            // if ($('#profilePicture').val() == "") {           
+
+            // }
+
+            //toastr optins directly picked from configurations:-
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            //Accessing access token from local storage storedd during  signUp process:---->
+            var accessToken = localStorage.getItem("AccessToken");
+            //Get value attribute from hidden input field:---->
+            var TempId = $("#userId").val();
+
+            //Get other values too from their corresponding input fields of Modal:--->
+            var employeeFirstName = $("#firstName").val();
+            var employeeLastName = $("#lastName").val();
+            var employeeEmail = $("#email").val();
+
+            //Way to get value attribute from input  type="radio" :---->
+            var employeeGender = $("input[name='gender']:checked").val();
+            var employeeDateOfBirth = $("#dateOfBirth").val();
+            var dateObject = new Date(employeeDateOfBirth);
+            var apiOrientedDate = dateObject.getDate() + '-' + eval(dateObject.getMonth()) + '-' + dateObject.getFullYear();
+
+            //assign the value attribute of hidden input field to local variable:----->
+            var encodedBase64 = $('#base64InputField').val();
+            console.log('Printing hidden field value before set '); console.log(encodedBase64);
+            //Way of to ensure only authorize user is accessing this page:----> 
+            var headers = {
+                'Authorization': 'Bearer ' + accessToken
+            };
+            var apiUrl = "https://springboot-users-crud.herokuapp.com/api/users/";
+
+            //orienting the extracted values in JSON data format:---->
+            formData = {
+                id: TempId,
+                username: employeeEmail,
+                firstName: employeeFirstName,
+                lastName: employeeLastName,
+                email: employeeEmail,
+                gender: employeeGender,
+                dateOfBirth: apiOrientedDate,
+                profilePhoto: encodedBase64
+            }
+
+            var jsonString = JSON.stringify(formData);
+
+            //enabling Loader 
+            showLoader();
+
+            //Calling ajax Method of 'PUT' Method to update the extracted data to server:----->
+            $.ajax({
+                url: apiUrl,
+                type: 'PUT',
+                data: jsonString,
+                dataType: 'json',
+                contentType: 'application/Json',
+                headers: headers,
+                success: function (response) {
+
+                    //loading the List to get updated record:-
+                    loadUsersList();
+                    //success message will popup :--->
+                    toastr.success(response.message);
+
+                    $('#updateUserModal').modal('hide');
+                },
+                //for error response:-
+                error: function (error) {
+                    console.log(error);
+                    toastr.error(error.responseJSON.message);
+                    hideLoader();
+                },
+            });
+
+
+
+        }
+        //End of updateMethod()
+
+        //start of deleteRecord():--
+        function deleteRecord(userId) {
+            console.log('inside deleteRecord function');
+            //toastr optins directly picked from configurations:-
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+
+
+            var accessToken = localStorage.getItem("AccessToken");
+
+            // var headers = new Headers();
+            // headers.append('Authorization', 'Bearer ' + accessToken);
+
+            var headers = {
+                'Authorization': 'Bearer ' + accessToken
+            };
+            //Concept of Find one user:-
+            var apiUrl = "https://springboot-users-crud.herokuapp.com/api/users/" + userId;
+
+            $('#deleteRecordModal').modal('hide');
+
+            showLoader();
+            $.ajax({
+                type: 'DELETE',
+                url: apiUrl,
+                headers: headers,
+                success: function (response) {
+                    toastr.success(response.message);
+                    loadUsersList();
+                    hideLoader();
+                },
+                //for error response:-
+                error: function (error) {
+
+                    if (error.status == 401) {
+                        location.replace("index.html");
+                    }
+                }
+            })
+        }
+
+        function openDeleteModal(userId) {
+            $('#deleteRecordModal').modal('show')
+            $('#deleteRecordModel').click(function () {
+                deleteRecord(userId);
+
+
+            })
+        }
+
+        function convertToBase64(object) {
+            console.log('inside convert to base64');
+            var file = object.files[0];
+            //Creating new FileReader object:--->
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                //Replacing the value attribute of hidden input field with base64 generated String :--->                
+                $('#base64InputField').val(reader.result);
+            }
+            //Inputing file:-->
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+
+</html>
